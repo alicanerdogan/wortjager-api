@@ -19,22 +19,21 @@ defmodule WortjagerWeb.UserController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    user = Account.get_user!(id)
-    render(conn, "show.json", user: user)
+  def show(conn, _params) do
+    logged_in_user = Guardian.Plug.current_resource(conn)
+    render(conn, "show.json", user: logged_in_user)
   end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Account.get_user!(id)
-
-    with {:ok, %User{} = user} <- Account.update_user(user, user_params) do
+  def update(conn, user_params) do
+    logged_in_user = Guardian.Plug.current_resource(conn)
+    with {:ok, %User{} = user} <- Account.update_user(logged_in_user, user_params) do
       render(conn, "show.json", user: user)
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    user = Account.get_user!(id)
-    with {:ok, %User{}} <- Account.delete_user(user) do
+  def delete(conn, _params) do
+    logged_in_user = Guardian.Plug.current_resource(conn)
+    with {:ok, %User{}} <- Account.delete_user(logged_in_user) do
       send_resp(conn, :no_content, "")
     end
   end

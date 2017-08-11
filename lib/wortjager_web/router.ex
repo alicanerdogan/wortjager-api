@@ -29,7 +29,9 @@ defmodule WortjagerWeb.Router do
   scope "/api", WortjagerWeb do
     pipe_through [:api, :api_auth]
 
-    resources "/users", UserController, except: [:index, :create, :edit]
+    get "/user", UserController, :show
+    patch "/user", UserController, :update
+    delete "/user", UserController, :delete
     delete "/sessions", SessionController, :logout
   end
 end
