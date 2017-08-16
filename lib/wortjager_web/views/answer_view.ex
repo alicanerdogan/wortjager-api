@@ -15,6 +15,7 @@ defmodule WortjagerWeb.AnswerView do
       response: answer.response,
       word_id: answer.word_id,
       user_id: answer.user_id,
-      type: answer.type}
+      type: answer.type,
+      result: answer.result}
   end
 end
