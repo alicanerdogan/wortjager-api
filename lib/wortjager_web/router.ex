@@ -34,5 +34,8 @@ defmodule WortjagerWeb.Router do
     patch "/user", UserController, :update
     delete "/user", UserController, :delete
     delete "/sessions", SessionController, :logout
+    get "/answers", AnswerController, :index
+    get "/answers/:id", AnswerController, :show
+    post "/answers", AnswerController, :create
   end
 end
