@@ -7,7 +7,8 @@ defmodule Wortjager.Scorecard do
   alias Wortjager.Repo
 
   alias Wortjager.Scorecard.Answer
-
+  alias Wortjager.Dictionary
+  
   @doc """
   Returns the list of answers.
   """
@@ -33,9 +34,19 @@ defmodule Wortjager.Scorecard do
   Creates a answer.
   """
   def create_answer(attrs \\ %{}) do
+    word_id = attrs["word_id"]
+    word = Dictionary.get_word!(word_id)
+    result = check_answer(word, attrs)
     %Answer{}
-    |> Answer.changeset(attrs)
+    |> Answer.changeset(Map.put(attrs, "result", result))
     |> Repo.insert()
+  end
+
+  defp check_answer(%{props: props, translations: translations}, %{"response" => response, "type" => question_type}) do
+    case question_type do
+      "translation" -> Enum.member?(translations, response)
+      _ -> props[question_type] == response
+    end
   end
 
   @doc """
