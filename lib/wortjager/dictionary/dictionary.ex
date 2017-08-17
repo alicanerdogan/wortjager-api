@@ -52,4 +52,10 @@ defmodule Wortjager.Dictionary do
   def change_word(%Word{} = word) do
     Word.changeset(word, %{})
   end
+
+  def get_ids() do
+    query = from w in Word,
+      select: w.id
+    Repo.all(query)
+  end
 end

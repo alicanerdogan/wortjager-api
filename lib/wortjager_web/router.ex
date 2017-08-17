@@ -37,5 +37,6 @@ defmodule WortjagerWeb.Router do
     get "/answers", AnswerController, :index
     get "/answers/:id", AnswerController, :show
     post "/answers", AnswerController, :create
+    get "/question", QuestionController, :get
   end
 end
