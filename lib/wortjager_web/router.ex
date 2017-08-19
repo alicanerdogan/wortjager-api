@@ -24,7 +24,6 @@ defmodule WortjagerWeb.Router do
 
     resources "/users", UserController, only: [:create]
     resources "/sessions", SessionController, only: [:create]
-    resources "/words", WordController
   end
 
   scope "/api", WortjagerWeb do
@@ -38,5 +37,7 @@ defmodule WortjagerWeb.Router do
     get "/answers/:id", AnswerController, :show
     post "/answers", AnswerController, :create
     get "/question", QuestionController, :get
+    post "/word_batch", WordBatchController, :create
+    resources "/word", WordController
   end
 end

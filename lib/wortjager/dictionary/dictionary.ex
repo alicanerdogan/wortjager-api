@@ -24,10 +24,20 @@ defmodule Wortjager.Dictionary do
   Creates a word.
   """
   def create_word(attrs \\ %{}) do
-    IO.inspect attrs
     %Word{}
     |> Word.changeset(attrs)
     |> Repo.insert()
+  end
+
+  @doc """
+  Creates a word.
+  """
+  def create_words(attrs \\ [%{}]) do
+    words = attrs
+      |> Enum.map(&create_word/1)
+      |> Enum.filter(fn(result_word_pair) -> elem(result_word_pair, 0) == :ok end)
+      |> Enum.map(fn(result_word_pair) -> elem(result_word_pair, 1) end)
+    {:ok, words}
   end
 
   @doc """
