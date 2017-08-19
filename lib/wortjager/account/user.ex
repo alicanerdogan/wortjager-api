@@ -8,22 +8,27 @@ defmodule Wortjager.Account.User do
     has_many :answers, Answer
     field :email, :string
     field :password, :string, virtual: true
+    field :role, :string
     field :password_hash, :string
 
     timestamps()
   end
 
+  @defined_roles %{admin: "admin"};
+  def roles, do: @defined_roles
+
   @doc false
   defp changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, [:email, :password, :role])
     |> validate_required([:email, :password])
+    |> validate_length(:password, min: 6)
+    |> unique_constraint(:email)
   end
 
   def registration_changeset(model, attrs) do
     model
     |> changeset(attrs)
-    |> validate_length(:password, min: 6)
     |> put_password_hash
   end
 

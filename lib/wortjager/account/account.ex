@@ -31,6 +31,15 @@ defmodule Wortjager.Account do
   end
 
   @doc """
+  Creates an admin.
+  """
+  def create_admin(attrs \\ %{}) do
+    %User{}
+    |> User.registration_changeset(Map.put(attrs, :role, User.roles[:admin]))
+    |> Repo.insert()
+  end
+
+  @doc """
   Updates a user.
   """
   def update_user(%User{} = user, attrs) do
