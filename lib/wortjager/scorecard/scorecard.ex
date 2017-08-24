@@ -7,6 +7,7 @@ defmodule Wortjager.Scorecard do
   alias Wortjager.Repo
 
   alias Wortjager.Scorecard.Answer
+  alias Wortjager.Scorecard.Sanitizer
   alias Wortjager.Dictionary
   
   @doc """
@@ -43,9 +44,10 @@ defmodule Wortjager.Scorecard do
   end
 
   defp check_answer(%{props: props, translations: translations}, %{"response" => response, "type" => question_type}) do
+    response = response |> Sanitizer.apply |> String.downcase
     case question_type do
-      "translation" -> Enum.member?(translations, response)
-      _ -> props[question_type] == response
+      "translation" -> translations |> Enum.map(&String.downcase/1) |> Enum.map(&Sanitizer.apply/1) |> Enum.member?(response)
+      _ -> Sanitizer.apply(String.downcase(props[question_type])) == response
     end
   end
 
