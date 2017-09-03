@@ -39,5 +39,6 @@ defmodule WortjagerWeb.Router do
     get "/question", QuestionController, :get
     post "/word_batch", WordBatchController, :create
     resources "/word", WordController
+    get "/statistics", StatisticsController, :get
   end
 end
