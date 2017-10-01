@@ -1,6 +1,7 @@
 defmodule WortjagerWeb.SessionController do
   use WortjagerWeb, :controller
   alias WortjagerWeb.Token
+  alias WortjagerWeb.SessionView
 
   def create(conn, %{"email" => email, "password" => password}) do
       case WortjagerWeb.Auth.login_by_email_and_pass(conn, email, password) do
