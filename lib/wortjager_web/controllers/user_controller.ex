@@ -3,6 +3,8 @@ defmodule WortjagerWeb.UserController do
 
   alias Wortjager.Account
   alias Wortjager.Account.User
+  alias WortjagerWeb.SessionView
+  alias WortjagerWeb.Token
 
   action_fallback WortjagerWeb.FallbackController
 
@@ -13,9 +15,8 @@ defmodule WortjagerWeb.UserController do
 
   def create(conn, user_params) do
     with {:ok, %User{} = user} <- Account.create_user(user_params) do
-      conn
-      |> put_status(:created)
-      |> render("show.json", user: user)
+      { new_conn, jwt, exp } = Token.generate(conn, user)
+      render(new_conn, SessionView, "login.json", user: user, jwt: jwt, exp: exp)
     end
   end
 

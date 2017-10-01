@@ -43,7 +43,8 @@ defmodule Wortjager.Mixfile do
       {:cowboy, "~> 1.0"},
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 0.12.0"},
-      {:guardian, "~> 0.14"}
+      {:guardian, "~> 0.14"},
+      {:httpoison, "~> 0.13"}
     ]
   end
 

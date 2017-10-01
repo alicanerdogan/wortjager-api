@@ -24,6 +24,7 @@ defmodule WortjagerWeb.Router do
 
     resources "/users", UserController, only: [:create]
     resources "/sessions", SessionController, only: [:create]
+    post "/auth/google", GoogleAuthController, :authorize
   end
 
   scope "/api", WortjagerWeb do

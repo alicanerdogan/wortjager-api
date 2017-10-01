@@ -31,6 +31,13 @@ config :guardian, Guardian,
   secret_key: "ABOVBUDAOLMAZARTIK",
   serializer: WortjagerWeb.GuardianSerializer
 
+config :wortjager, :auth,
+  google: [ client_id: "891278828941-48vpaqffj33orudas47ug1erfqo38vir.apps.googleusercontent.com",
+            redirect_uri_path: "/auth/google",
+            grant_type: "authorization_code",
+            post_url: "https://accounts.google.com/o/oauth2/token" ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
+import_config "common.secret.exs"
 import_config "#{Mix.env}.exs"

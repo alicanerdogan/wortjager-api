@@ -3,7 +3,6 @@ defmodule WortjagerWeb.Auth do
   import Plug.Conn
 
   alias Wortjager.Account
-  alias Wortjager.Account.User
 
   def login(conn, user) do
       conn
