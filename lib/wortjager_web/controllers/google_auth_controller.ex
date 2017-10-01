@@ -14,10 +14,11 @@ defmodule WortjagerWeb.GoogleAuthController do
             { new_conn, jwt, exp } = Token.generate(conn, user)
             render(new_conn, SessionView, "login.json", user: user, jwt: jwt, exp: exp)
           _ ->
-            conn |> send_resp(400, "")
+            conn |> send_resp(400, "User not found!")
         end
-      _ ->
-        conn |> send_resp(400, "")
+      other ->
+        IO.inspect other
+        conn |> send_resp(400, "User mail not provided")
     end
   end
 
@@ -41,7 +42,8 @@ defmodule WortjagerWeb.GoogleAuthController do
     case HTTPoison.post(post_url, body, [{"Content-Type", "application/x-www-form-urlencoded"}]) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         Poison.decode(body)
-      resp ->
+      other ->
+        IO.inspect other
         {:fail}
     end
   end
