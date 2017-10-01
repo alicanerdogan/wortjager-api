@@ -35,9 +35,7 @@ defmodule WortjagerWeb.GoogleAuthController do
   end
 
   defp get_user_token(conn, not_verified_code) do
-    [google: [client_id: client_id, redirect_uri_path: redirect_uri_path, grant_type: grant_type, post_url: post_url, client_secret: client_secret]] = Application.get_env(:wortjager, :auth)
-    host = "#{conn.scheme}://#{conn.host}:#{conn.port}"
-    redirect_uri = "#{host}#{redirect_uri_path}"
+    [google: [client_id: client_id, redirect_uri_path: redirect_uri, grant_type: grant_type, post_url: post_url, client_secret: client_secret]] = Application.get_env(:wortjager, :auth)
     body = "code=#{not_verified_code}&client_id=#{client_id}&client_secret=#{client_secret}&grant_type=#{grant_type}&redirect_uri=#{redirect_uri}"
     case HTTPoison.post(post_url, body, [{"Content-Type", "application/x-www-form-urlencoded"}]) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
