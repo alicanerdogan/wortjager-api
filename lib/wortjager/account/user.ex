@@ -10,6 +10,7 @@ defmodule Wortjager.Account.User do
     field :password, :string, virtual: true
     field :role, :string
     field :password_hash, :string
+    field :provider, :string
 
     timestamps()
   end
@@ -22,6 +23,7 @@ defmodule Wortjager.Account.User do
     user
     |> cast(attrs, [:email, :password, :role])
     |> validate_required([:email, :password])
+    |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 6)
     |> unique_constraint(:email)
   end
@@ -30,6 +32,15 @@ defmodule Wortjager.Account.User do
     model
     |> changeset(attrs)
     |> put_password_hash
+  end
+
+  def provider_registration_changeset(%User{} = user, attrs) do
+    user
+    |> cast(attrs, [:email, :provider, :role])
+    |> validate_required([:email, :provider])
+    |> validate_format(:email, ~r/@/)
+    |> validate_subset(:provider, ["google"])
+    |> unique_constraint(:email)
   end
 
   defp put_password_hash(changeset) do

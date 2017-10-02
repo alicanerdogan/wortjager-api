@@ -19,7 +19,7 @@ defmodule Wortjager.Account do
   @doc """
   Gets a single user.
   """
-  def get_user_by_email!(email), do: Repo.get_by(User, email: email)
+  def get_user_by_email(email), do: Repo.get_by(User, email: email)
 
   @doc """
   Creates a user.
@@ -27,6 +27,15 @@ defmodule Wortjager.Account do
   def create_user(attrs \\ %{}) do
     %User{}
     |> User.registration_changeset(attrs)
+    |> Repo.insert()
+  end
+  
+  @doc """
+  Creates a user with provider credentials.
+  """
+  def create_user_with_provider(attrs \\ %{}) do
+    %User{}
+    |> User.provider_registration_changeset(attrs)
     |> Repo.insert()
   end
 
