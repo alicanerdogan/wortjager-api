@@ -39,7 +39,7 @@ defmodule Wortjager.Account.User do
     |> cast(attrs, [:email, :provider, :role])
     |> validate_required([:email, :provider])
     |> validate_format(:email, ~r/@/)
-    |> validate_subset(:provider, ["google"])
+    |> validate_inclusion(:provider, [ "google" ])
     |> unique_constraint(:email)
   end
 

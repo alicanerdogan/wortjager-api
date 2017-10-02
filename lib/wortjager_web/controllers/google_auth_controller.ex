@@ -9,7 +9,10 @@ defmodule WortjagerWeb.GoogleAuthController do
   def authorize(conn, %{"code" => not_verified_code}) do
     case get_user_mail(not_verified_code) do
       {:ok, email} ->
-        user = Account.get_user_by_email(email) || Account.create_user_with_provider(%{ email: email, provider: "google" })
+        user = Account.get_user_by_email(email)
+        if user == nil do
+          { :ok, user } = Account.create_user_with_provider(%{ email: email, provider: "google" })
+        end
         render_token_response(conn, user)
       error ->
         IO.inspect error
