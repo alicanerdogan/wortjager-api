@@ -43,10 +43,11 @@ defmodule Wortjager.Scorecard do
     |> Repo.insert()
   end
 
-  defp check_answer(%{props: props, translations: translations}, %{"response" => response, "type" => question_type}) do
+  defp check_answer(%{content: content, props: props, translations: translations}, %{"response" => response, "type" => question_type}) do
     response = response |> Sanitizer.apply |> String.downcase
     case question_type do
       "translation" -> translations |> Enum.map(&String.downcase/1) |> Enum.map(&Sanitizer.apply/1) |> Enum.member?(response)
+      "content" -> Sanitizer.apply(String.downcase(content)) == response
       _ -> Sanitizer.apply(String.downcase(props[question_type])) == response
     end
   end

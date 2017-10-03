@@ -14,11 +14,11 @@ defmodule Wortjager.Question do
   end
 
   @question_types %{
-    noun: ["artikel", "translation", "plural"],
-    verb: ["preterite", "translation", "pp"],
-    adjective: ["translation"],
-    adverb: ["translation"],
-    conjugation: ["translation"]
+    noun: ["artikel", "translation", "plural", "content"],
+    verb: ["preterite", "translation", "pp", "content"],
+    adjective: ["translation", "content"],
+    adverb: ["translation", "content"],
+    conjugation: ["translation", "content"]
   }
 
   defp create_question(word) do
