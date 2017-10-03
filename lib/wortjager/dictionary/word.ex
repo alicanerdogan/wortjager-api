@@ -18,6 +18,7 @@ defmodule Wortjager.Dictionary.Word do
     word
     |> cast(attrs, [:type, :content, :translations, :props])
     |> validate_required([:type, :content, :translations])
+    |> validate_inclusion(:type, [ "noun", "verb", "adjective", "adverb", "conjugation" ])
     |> unique_constraint(:content)
   end
 end

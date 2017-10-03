@@ -15,7 +15,10 @@ defmodule Wortjager.Question do
 
   @question_types %{
     noun: ["artikel", "translation", "plural"],
-    verb: ["preterite", "translation", "pp"]
+    verb: ["preterite", "translation", "pp"],
+    adjective: ["translation"],
+    adverb: ["translation"],
+    conjugation: ["translation"]
   }
 
   defp create_question(word) do
